@@ -3,7 +3,7 @@ import unittest2
 from src import server
 
 
-class ServerTests(unittest.TestCase):
+class ServerTests(unittest2.TestCase):
     def setUp(self):
         server.config['TESTING'] = True
         server.config['WTF_CSRF_ENABLED'] = False
