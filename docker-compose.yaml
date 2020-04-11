@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  client:
+    stdin_open: true
+    container_name: ${APP_NAME}-client
+    build: ./client
+    volumes:
+      - ./client:/var/www/client
+      - node_modules:/var/www/client/node_modules
+    ports:
+      - ${CLIENT_PORT:-3000}:${CLIENT_PORT:-3000}
+    env_file:
+      - .env
+  server:
+    container_name: ${APP_NAME}-server
+    build: ./server
+    volumes:
+      - ./server:/server
+    env_file:
+      - .env
+    ports:
+      - ${SERVER_PORT:-8081}:${SERVER_PORT:-8081}
+    depends_on:
+      - database
+  database:
+    image: postgres:12
+    container_name: ${APP_NAME}-database
+    volumes:
+      - postgresql:/var/lib/$APP_NAME/data
+    env_file:
+      - .env
+
+volumes:
+  postgresql:
+    name: "${APP_NAME}-${APP_ENV}-database"
+  node_modules:
+    name: "${APP_NAME}-${APP_ENV}-node_modules"
