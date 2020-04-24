@@ -9,7 +9,7 @@ describe("Splash page testing.", () => {
     wrapper = shallow(<Splash />);
   });
 
-  test("Splash says hello world.", () => {
-    expect(wrapper.text()).toEqual("Hello World!");
+  test("Splash says app name.", () => {
+    expect(wrapper.text()).toMatch(/Group Flip/);
   });
 });

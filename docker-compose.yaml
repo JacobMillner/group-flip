@@ -12,6 +12,7 @@ services:
       - ${CLIENT_PORT:-3000}:${CLIENT_PORT:-3000}
     env_file:
       - .env
+    restart: ${RESTART_POLICY}
   server:
     container_name: ${APP_NAME}-server
     build: ./server
@@ -23,6 +24,7 @@ services:
       - ${SERVER_PORT:-8081}:${SERVER_PORT:-8081}
     depends_on:
       - database
+    restart: ${RESTART_POLICY}
   database:
     image: postgres:12
     container_name: ${APP_NAME}-database
@@ -30,6 +32,7 @@ services:
       - postgresql:/var/lib/$APP_NAME/data
     env_file:
       - .env
+    restart: ${RESTART_POLICY}
 
 volumes:
   postgresql:

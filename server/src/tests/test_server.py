@@ -1,22 +1,12 @@
-import os
-import unittest2
-from src import server
+from .test_base import TestBase
 
 
-class ServerTests(unittest2.TestCase):
-    def setUp(self):
-        server.config['TESTING'] = True
-        server.config['WTF_CSRF_ENABLED'] = False
-        server.config['DEBUG'] = False
-        self.server = server.test_client()
-        self.assertEqual(server.debug, False)
-
-    def tearDown(self):
-        pass
+class ServerTests(TestBase):
 
     def test_main_page(self):
         response = self.server.get('/', follow_redirects=True)
-        self.assertEqual(response.status_code, 200)
+        # we don't have a root route since we are an API, 404 for now
+        self.assertEqual(response.status_code, 404)
 
 
 if __name__ == "__main__":
